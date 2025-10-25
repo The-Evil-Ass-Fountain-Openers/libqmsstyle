@@ -1,0 +1,12 @@
+#ifndef LIBQMSSTYLE_GLOBAL_H
+#define LIBQMSSTYLE_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(LIBQMSSTYLE_LIBRARY)
+#define LIBQMSSTYLE_EXPORT Q_DECL_EXPORT
+#else
+#define LIBQMSSTYLE_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // LIBQMSSTYLE_GLOBAL_H
