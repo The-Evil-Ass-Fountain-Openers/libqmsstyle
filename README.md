@@ -9,15 +9,21 @@ At the time of writing this, libqmsstyle is being developed under Qt Creator, wi
 ## TODO
 
 - [ ] Finish documentation
+    - [ ] Vista+ MSSTYLE
+    - [ ] XP MSSTYLE
 - [X] MSSTYLE extraction to ``/tmp/libqmsstyle-msstylename``
 - [X] Add support for reading and storing MSSTYLE classes
 - [X] Add support for getting the parts of an MSSTYLE class
 - [X] Add support for getting the states of an MSSTYLE class part
-- [ ] Add properties reading
+- [ ] Make a singleton which will store every MSSTYLE property for every class, part and state
+- [ ] Expose the property types enum
+- [ ] Finish properties reading
 - [ ] Add writing support
-- [ ] Improve included testing app
+- [ ] Add AMAP reading support
+- [ ] Convert the current testing app into an MSSTYLE previewer
 - [ ] Add Windows XP MSSTYLE parsing support
 
 ## Credits
 
-- [msstyleEditor](https://https://github.com/nptr/msstyleEditor/) code. Big help for figuring out msstyle parsing. 
+- The Evil Ass Fountain Openers: [catpswin56](https://gitgud.io/catpswin56/), [dominichayesferen](https://github.com/dominichayesferen/), [wackyideas](https://gitgud.io/wackyideas/): research, prototyping and implementation
+- [msstyleEditor](https://github.com/nptr/msstyleEditor/) original code that helped out **a lot** with Vista+ MSSTYLE parsing
