@@ -5,7 +5,8 @@
 #include <QColor>
 #include <QSize>
 
-namespace Style {
+namespace Style
+{
 
 Property PropertyStream::readNextProperty(QByteArray data, int &start)
 {
@@ -13,12 +14,14 @@ Property PropertyStream::readNextProperty(QByteArray data, int &start)
 
     PropertyHeader header(data, cursor);
 
-    while(!header.isValid()) {
+    while(!header.isValid())
+    {
         cursor++;
         header = PropertyHeader(data, cursor);
     }
 
-    if(cursor - start > 4) {
+    if(cursor - start > 4)
+    {
         start = cursor;
         return Property(static_cast<IDENTIFIER>(2), static_cast<IDENTIFIER>(2));
     }
@@ -35,12 +38,14 @@ Property PropertyStream::readNextProperty(QByteArray data, int &start)
 
         int numInts = 0;
 
-        if(header.sizeInBytes != 0) {
+        if(header.sizeInBytes != 0)
+        {
             numInts = util::byteArrToInt(data, cursor);
             cursor += sizeof(qint32);
         }
 
-        for(int i = 0; i < numInts; ++i) {
+        for(int i = 0; i < numInts; ++i)
+        {
             list.append(util::byteArrToInt(data, cursor));
             cursor += sizeof(qint32);
         }

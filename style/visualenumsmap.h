@@ -5,9 +5,11 @@
 
 #include <QObject>
 
-namespace Style {
+namespace Style
+{
 
-struct VisualEnum {
+struct VisualEnum
+{
     int value;
     QString name;
 };

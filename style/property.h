@@ -8,7 +8,8 @@
 
 #include <QVariant>
 
-namespace Style {
+namespace Style
+{
 
 class PropertyHeader
 {
@@ -20,7 +21,7 @@ public:
     qint32 nameID;       // Offset: 0, Size: 4,	ID for the property name, described in MSDN
     qint32 typeID;       // Offset: 4, Size: 4,	ID for the type of the property, described in MSDN
     qint32 classID;      // Offset: 8, Size: 4,	Index to the class from CMAP the propery belongs to
-    qint32 partID;     // Offset: 12, Size: 4	ID for the part of the class the property belongs to
+    qint32 partID;       // Offset: 12, Size: 4	ID for the part of the class the property belongs to
     qint32 stateID;      // Offset: 16, Size: 4	ID for the state map
     qint32 shortFlag;    // Offset: 20, Size: 4	If not 0, ignore 'sizeInBytes' as no data follows. Instead this field may contain data.
     qint32 reserved;     // Offset: 24, Size: 4	Seems to be always zero
@@ -28,7 +29,8 @@ public:
 
     bool isValid();
 
-    bool operator==(const PropertyHeader &object) {
+    bool operator==(const PropertyHeader &object)
+    {
         return object.classID == classID &&
                object.nameID == nameID &&
                object.partID == partID &&

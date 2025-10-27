@@ -10,7 +10,8 @@
 
 #include <QtLogging>
 
-namespace Style {
+namespace Style
+{
 
 Style::Style(const QString &name, const QUrl &path)
     : QObject{nullptr}
@@ -23,7 +24,8 @@ Style::Style(const QString &name, const QUrl &path)
 
     m_styleDir = QDir(path.toString());
 
-    if(!m_styleDir.exists()) {
+    if(!m_styleDir.exists())
+    {
         qFatal() << "libqmsstyle<" + qApp->applicationName() + ">: extracted msstyle path does not exist. Style object is invalid.";
 
         m_invalid = true;
@@ -39,7 +41,8 @@ QByteArray Style::removeNull(const QByteArray &bytes, const int &start, const in
 {
     QByteArray result;
 
-    for(int i = 0; i < bytes.length(); i++) {
+    for(int i = 0; i < bytes.length(); i++)
+    {
         char byte = bytes[i];
         if(byte == 0) continue;
         result.push_back(byte);
@@ -58,48 +61,49 @@ Style::Version Style::getVersion()
 
     for(Class classObject : m_classes)
     {
-        if(classObject.className == "DWMTouch") {
+        if(classObject.className == "DWMTouch")
+        {
             foundDWMTouch = true;
             continue;
-
-        } else if(classObject.className == "DWMPen") {
+        }
+        else if(classObject.className == "DWMPen")
+        {
             foundDWMPen = true;
             continue;
-
-        } else if(classObject.className == "W8::TaskbandExtendedUI") {
+        }
+        else if(classObject.className == "W8::TaskbandExtendedUI")
+        {
             foundW8Taskband = true;
             continue;
-
-        } else if(classObject.className == "QueryBuilder") {
+        }
+        else if(classObject.className == "QueryBuilder")
+        {
             foundVistaQueryBuilder = true;
             continue;
-
-        } else if(classObject.className == "DarkMode::TaskManager") {
+        }
+        else if(classObject.className == "DarkMode::TaskManager")
+        {
             foundTaskBand2Light_Taskband2 = true;
             continue;
-
         }
     }
 
     if (foundTaskBand2Light_Taskband2)
         return Version::Windows11;
-
     else if (foundW8Taskband)
         return Version::Windows8;
-
     else if (foundDWMTouch || foundDWMPen)
         return Version::Windows10;
-
     else if (foundVistaQueryBuilder)
         return Version::WindowsVista;
-
     else
         return Version::Windows7;
 }
 
 bool Style::load()
 {
-    if(m_invalid) {
+    if(m_invalid)
+    {
         qWarning() << "libqmsstyle<" + qApp->applicationName() + ">: attempted to load an invalid Style object.";
         return false;
     }
@@ -108,7 +112,8 @@ bool Style::load()
     {
         QFile classmap(m_styleDir.absoluteFilePath(m_filesPrefix + "CMAP_CMAP"));
 
-        if(!classmap.exists()) {
+        if(!classmap.exists())
+        {
             qFatal() << "libqmsstyle<" + qApp->applicationName() + ">: CMAP file does not exist. Style object is invalid.";
 
             m_invalid = true;
@@ -117,7 +122,8 @@ bool Style::load()
             return false;
         }
 
-        if(classmap.open(QIODevice::ReadOnly)) {
+        if(classmap.open(QIODevice::ReadOnly))
+        {
             QByteArray classmap_array(classmap.readAll());
 
             int lastClass = 0;
@@ -125,7 +131,8 @@ bool Style::load()
 
             for(int i = 0; i < classmap_array.length(); i += 2)
             {
-                if(classmap_array[i] == 0 && classmap_array[i + 1] == 0) {
+                if(classmap_array[i] == 0 && classmap_array[i + 1] == 0)
+                {
                     if (i - lastClass > 2)
                     {
                         Class classObject(
@@ -136,11 +143,12 @@ bool Style::load()
                         emit classAdded(&classObject);
                         foundClasses++;
                     }
-
                     lastClass = i + 2;
                 }
             }
-        } else {
+        }
+        else
+        {
             qFatal() << "libqmsstyle<" + qApp->applicationName() + ">: could not open CMAP file. Style object is invalid.";
 
             m_invalid = true;

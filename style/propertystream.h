@@ -5,7 +5,8 @@
 
 #include <QObject>
 
-namespace Style {
+namespace Style
+{
 
 class PropertyStream
 {

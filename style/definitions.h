@@ -1,7 +1,8 @@
 #ifndef DEFINITIONS_H
 #define DEFINITIONS_H
 
-namespace Style {
+namespace Style
+{
 
 enum IDENTIFIER
 {

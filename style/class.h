@@ -5,15 +5,18 @@
 
 #include <QObject>
 
-namespace Style {
+namespace Style
+{
 
-struct State {
+struct State
+{
     int id;
     QString name;
     QList<Property> properties;
 };
 
-struct Part {
+struct Part
+{
     int id;
     QString name;
     QList<State> states;

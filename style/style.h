@@ -8,7 +8,8 @@
 
 #include "class.h"
 
-namespace Style {
+namespace Style
+{
 
 class Style : public QObject
 {
@@ -23,7 +24,8 @@ class Style : public QObject
     Q_PROPERTY(QList<Class> classes READ classes NOTIFY classAdded)
 
 public:
-    enum Version {
+    enum Version
+    {
         WindowsXP,
         WindowsVista,
         Windows7,

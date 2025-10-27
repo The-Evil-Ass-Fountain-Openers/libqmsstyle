@@ -8,9 +8,11 @@
 
 #include <QList>
 
-namespace Style {
+namespace Style
+{
 
-struct VisualPart {
+struct VisualPart
+{
         int id;
         QString name;
         QList<VisualState> states;

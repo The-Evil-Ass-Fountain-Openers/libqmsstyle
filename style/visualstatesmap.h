@@ -3,9 +3,11 @@
 
 #include <QList>
 
-namespace Style {
+namespace Style
+{
 
-struct VisualState {
+struct VisualState
+{
         int value;
         QString name;
 };

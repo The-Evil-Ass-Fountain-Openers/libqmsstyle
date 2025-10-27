@@ -30,9 +30,11 @@ bool LibQmsstyle::loadMsstyle(const QUrl &path)
 
     m_process = new QProcess();
 
-    QObject::connect(m_process, &QProcess::finished, this, [=](){
+    QObject::connect(m_process, &QProcess::finished, this, [=]()
+    {
         Style::Style *style = new Style::Style(file.fileName(), QUrl(tmp.absolutePath()));
-        if(!style->invalid()) {
+        if(!style->invalid())
+        {
             qDebug() << "libqmsstyle<" + qApp->applicationName() + ">: Style object for " + file.absoluteFilePath() + " was created succesfully.";
 
             style->load();

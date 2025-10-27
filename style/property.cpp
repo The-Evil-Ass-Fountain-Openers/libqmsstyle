@@ -6,7 +6,8 @@
 
 #include <QtLogging>
 
-namespace Style {
+namespace Style
+{
 
 PropertyHeader::PropertyHeader(qint32 name, qint32 type)
 {
@@ -72,7 +73,8 @@ PropertyHeader::PropertyHeader(qint32 name, qint32 type)
         break;
     }
 
-    if (!isValid()) {
+    if (!isValid())
+    {
         qFatal() << "libqmsstyle<" + qApp->applicationName() + ">: nameID/typeID mismatch in property object. Style object is invalid.";
         return;
     }
@@ -209,7 +211,8 @@ QVariant Property::value()
 
 template <typename T> T Property::valueAs()
 {
-    return m_value.value<T>();}
+    return m_value.value<T>();
+}
 
 QString Property::valueString()
 {
