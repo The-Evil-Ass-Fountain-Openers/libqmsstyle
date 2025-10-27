@@ -11,7 +11,8 @@ At the time of writing this, libqmsstyle is being developed under Qt Creator, wi
 - [ ] Finish documentation
 - [X] MSSTYLE extraction to ``/tmp/libqmsstyle-msstylename``
 - [X] Add support for reading and storing MSSTYLE classes
-- [ ] Add support for getting the parts of an MSSTYLE class
+- [X] Add support for getting the parts of an MSSTYLE class
+- [X] Add support for getting the states of an MSSTYLE class part
 - [ ] Add properties reading
 - [ ] Add writing support
 - [ ] Improve included testing app
