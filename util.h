@@ -3,10 +3,9 @@
 
 #include <QByteArray>
 
-class important
+namespace util
 {
-public:
-    static int byteArrToInt(QByteArray &ba, int index);
-};
+    int byteArrToInt(QByteArray &ba, int index);
+}
 
 #endif // IMPORTANT_H

@@ -1,5 +1,5 @@
 #include "propertystream.h"
-#include "../important.h"
+#include "../util.h"
 
 #include <QMargins>
 #include <QColor>
@@ -36,12 +36,12 @@ Property PropertyStream::readNextProperty(QByteArray data, int &start)
         int numInts = 0;
 
         if(header.sizeInBytes != 0) {
-            numInts = important::byteArrToInt(data, cursor);
+            numInts = util::byteArrToInt(data, cursor);
             cursor += sizeof(qint32);
         }
 
         for(int i = 0; i < numInts; ++i) {
-            list.append(important::byteArrToInt(data, cursor));
+            list.append(util::byteArrToInt(data, cursor));
             cursor += sizeof(qint32);
         }
 
@@ -84,7 +84,7 @@ Property PropertyStream::readNextProperty(QByteArray data, int &start)
     {
         if(header.shortFlag == 0)
         {
-            prop.setValue(important::byteArrToInt(data, cursor));
+            prop.setValue(util::byteArrToInt(data, cursor));
             cursor += 8;
         }
         else prop.setValue(0);
@@ -95,7 +95,7 @@ Property PropertyStream::readNextProperty(QByteArray data, int &start)
     {
         if(header.shortFlag == 0)
         {
-            prop.setValue(important::byteArrToInt(data, cursor) != 0);
+            prop.setValue(util::byteArrToInt(data, cursor) != 0);
             cursor += 8;
         }
         else prop.setValue(false);
@@ -106,7 +106,7 @@ Property PropertyStream::readNextProperty(QByteArray data, int &start)
     {
         if(header.shortFlag == 0)
         {
-            int colorref = important::byteArrToInt(data, cursor);
+            int colorref = util::byteArrToInt(data, cursor);
             int r = (colorref >> 0) & 0xFF;
             int g = (colorref >> 8) & 0xFF;
             int b = (colorref >> 16) & 0xFF;
@@ -121,9 +121,9 @@ Property PropertyStream::readNextProperty(QByteArray data, int &start)
     {
         if(header.shortFlag == 0)
         {
-            int x = important::byteArrToInt(data, cursor);
+            int x = util::byteArrToInt(data, cursor);
             cursor += 4;
-            int y = important::byteArrToInt(data, cursor);
+            int y = util::byteArrToInt(data, cursor);
             cursor += 4;
             prop.setValue(QSize(x, y));
         }
@@ -136,13 +136,13 @@ Property PropertyStream::readNextProperty(QByteArray data, int &start)
         if(header.shortFlag == 0)
         {
             // struct RECT format is LTRB (windef.h)
-            int l = important::byteArrToInt(data, cursor);
+            int l = util::byteArrToInt(data, cursor);
             cursor += 4;
-            int t = important::byteArrToInt(data, cursor);
+            int t = util::byteArrToInt(data, cursor);
             cursor += 4;
-            int r = important::byteArrToInt(data, cursor);
+            int r = util::byteArrToInt(data, cursor);
             cursor += 4;
-            int b = important::byteArrToInt(data, cursor);
+            int b = util::byteArrToInt(data, cursor);
             cursor += 4;
             prop.setValue(QVariant::fromValue(QMargins(t, b, l, r)));
         }
@@ -154,13 +154,13 @@ Property PropertyStream::readNextProperty(QByteArray data, int &start)
         // struct MARGINS format is LRTB (uxtheme.h)
         if(header.shortFlag == 0)
         {
-            int l = important::byteArrToInt(data, cursor);
+            int l = util::byteArrToInt(data, cursor);
             cursor += 4;
-            int r = important::byteArrToInt(data, cursor);
+            int r = util::byteArrToInt(data, cursor);
             cursor += 4;
-            int t = important::byteArrToInt(data, cursor);
+            int t = util::byteArrToInt(data, cursor);
             cursor += 4;
-            int b = important::byteArrToInt(data, cursor);
+            int b = util::byteArrToInt(data, cursor);
             cursor += 4;
             prop.setValue(QVariant::fromValue(QMargins(t, b, l, r)));
         }

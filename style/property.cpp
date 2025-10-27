@@ -1,6 +1,6 @@
 #include "property.h"
 #include "visualenumsmap.h"
-#include "../important.h"
+#include "../util.h"
 
 #include <QApplication>
 
@@ -80,14 +80,14 @@ PropertyHeader::PropertyHeader(qint32 name, qint32 type)
 
 PropertyHeader::PropertyHeader(QByteArray data, int start)
 {
-    nameID = important::byteArrToInt(data, start + 0);
-    typeID = important::byteArrToInt(data, start + 4);
-    classID = important::byteArrToInt(data, start + 8);
-    partID = important::byteArrToInt(data, start + 12);
-    stateID = important::byteArrToInt(data, start + 16);
-    shortFlag = important::byteArrToInt(data, start + 20);
-    reserved = important::byteArrToInt(data, start + 24);
-    sizeInBytes = important::byteArrToInt(data, start + 28);
+    nameID = 	  util::byteArrToInt(data, start + 0);
+    typeID =      util::byteArrToInt(data, start + 4);
+    classID =     util::byteArrToInt(data, start + 8);
+    partID =      util::byteArrToInt(data, start + 12);
+    stateID =     util::byteArrToInt(data, start + 16);
+    shortFlag =   util::byteArrToInt(data, start + 20);
+    reserved = 	  util::byteArrToInt(data, start + 24);
+    sizeInBytes = util::byteArrToInt(data, start + 28);
 }
 
 PropertyHeader::PropertyHeader(const PropertyHeader &object)

@@ -1,6 +1,6 @@
-#include "important.h"
+#include "util.h"
 
-int important::byteArrToInt(QByteArray &ba, int index)
+int util::byteArrToInt(QByteArray &ba, int index)
 {
     int result = 0;
     int shift = 0;
