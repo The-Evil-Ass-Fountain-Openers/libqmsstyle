@@ -1,15 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "../style/property.h"
 #include "../style/class.h"
 #include "../style/style.h"
 
-#include <QFileInfo>
 #include <QDir>
 #include <QFile>
-
-#include <stdexcept>
-#include <string>
+#include <QFileInfo>
+#include <QMenuBar>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -17,47 +16,94 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QObject::connect(ui->readMsstyle, &QPushButton::clicked, this, &MainWindow::readMsstyle_clicked);
+    this->setWindowTitle("libqmsstyle testing application");
+    this->setWindowIcon(QIcon::fromTheme("folder"));
+
+    QObject::connect(ui->currentClass, &QComboBox::currentIndexChanged, this, &MainWindow::refreshParts);
+    QObject::connect(ui->currentPart, &QComboBox::currentIndexChanged, this, &MainWindow::refreshStates);
+    QObject::connect(ui->currentState, &QComboBox::currentIndexChanged, this, &MainWindow::refreshProperties);
+    QObject::connect(ui->currentProperty, &QComboBox::currentIndexChanged, this, &MainWindow::refreshProperty);
+
+    QObject::connect(ui->menuBar, &QMenuBar::triggered, this, &MainWindow::actionTriggered);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete m_msstyleParser;
+    delete m_fileDlg;
 }
 
-void MainWindow::readMsstyle_clicked()
+// there's not gonna be any other actions soooo
+void MainWindow::actionTriggered(QAction *action)
 {
-    LibQmsstyle *msstyleParser = new LibQmsstyle;
-    QObject::connect(msstyleParser, &LibQmsstyle::msstyleLoaded, this, [=](Style::Style *loadedStyle){
-        QString className = "class name here";
-        QString partId = "part name here";
-        QString stateId = "state id here";
+    if(!m_fileDlg) {
+        m_fileDlg = new QFileDialog(nullptr, "Open an MSSTYLE file", QDir::homePath(), "Windows MSSTYLE files (*.msstyles)");
+        QObject::connect(m_fileDlg, &QFileDialog::fileSelected, this, &MainWindow::readMSSTYLE);
+    }
 
-        for(Style::Class classObject : loadedStyle->classes()) {
-            if(classObject.className == "Button") {
-                className = "class: Button";
+    m_fileDlg->open();
+}
 
-                for(Style::Part part : classObject.parts) {
-                    if(part.name == "PUSHBUTTON") {
-                        partId = "part id: " + QString::number(part.id);
+void MainWindow::readMSSTYLE(const QString &file) {
+    if(!m_msstyleParser) {
+        m_msstyleParser = new LibQmsstyle;
 
-                        for(Style::State state : part.states) {
-                            if(state.name == "NORMAL") stateId = "normal state id: " + QString::number(state.id);
-                        }
-                    }
-                }
-            }
-        }
+        QObject::connect(m_msstyleParser, &LibQmsstyle::msstyleLoaded, this, [=](Style::Style *loadedStyle) {
+            for(Style::Class classObject : loadedStyle->classes())
+                ui->currentClass->addItem(classObject.className);
+        });
+    }
 
-        ui->classname->setText(className);
-        ui->partid->setText(partId);
-        ui->stateid->setText(stateId);
+    m_msstyleParser->loadMsstyle(file);
+}
 
-        ui->extractedPath->setText(loadedStyle->path().toString());
-        ui->version->setText(QString::number(loadedStyle->version()));
-    });
-    if(msstyleParser->loadMsstyle(QUrl(ui->msstylePath->text()))) {
-        m_loadedMsstyle = msstyleParser;
+void MainWindow::refreshParts(int index) {
+    ui->currentPart->clear();
+    if(m_msstyleParser && index >= 0) {
+        const Style::Class *currentClass = &m_msstyleParser->loadedStyles().at(0)->classes().at(index);
+
+        for(const Style::Part &partObject : currentClass->parts)
+            ui->currentPart->addItem(QString::number(partObject.id) + " - " + partObject.name);
+    }
+}
+
+void MainWindow::refreshStates(int index) {
+    ui->currentState->clear();
+    if(m_msstyleParser && index >= 0) {
+        const Style::Class *currentClass = &m_msstyleParser->loadedStyles().at(0)->classes().at(ui->currentClass->currentIndex());
+        const Style::Part *currentPart = &currentClass->parts.at(index);
+
+        for(const Style::State &stateObject : currentPart->states)
+            ui->currentState->addItem(QString::number(stateObject.id) + " - " + stateObject.name);
+    }
+}
+
+void MainWindow::refreshProperties(int index) {
+    ui->currentProperty->clear();
+    if(m_msstyleParser && index >= 0) {
+        const Style::Class *currentClass = &m_msstyleParser->loadedStyles().at(0)->classes().at(ui->currentClass->currentIndex());
+        const Style::Part *currentPart = &currentClass->parts.at(ui->currentPart->currentIndex());
+        const Style::State *currentState = &currentPart->states.at(index);
+
+        for(const Style::Property &propertyObject : currentState->properties)
+            ui->currentProperty->addItem(propertyObject.name);
+    }
+}
+
+// this sucks
+void MainWindow::refreshProperty(int index) {
+    if(m_msstyleParser && index >= 0) {
+        Style::Style *currentStyle = m_msstyleParser->loadedStyles().at(0);
+        const Style::Class *currentClass = &currentStyle->classes().at(ui->currentClass->currentIndex());
+        const Style::Part *currentPart = &currentClass->parts.at(ui->currentPart->currentIndex());
+        const Style::State *currentState = &currentPart->states.at(ui->currentState->currentIndex());
+        const Style::Property *currentProperty = &currentState->properties.at(ui->currentProperty->currentIndex());
+
+        if(currentProperty->isImage()) ui->imagefile->setPixmap(
+            QPixmap(currentStyle->dir().absoluteFilePath(currentStyle->name() + "_IMAGE_" + currentProperty->valueString()))
+        );
+        ui->propertyvalue->setText(currentProperty->valueString());
     }
 }
 

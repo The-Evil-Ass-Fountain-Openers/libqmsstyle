@@ -2,11 +2,12 @@
 #define MAINWINDOW_H
 
 #include "../libqmsstyle.h"
-#include "../style/style.h"
 
 #include <QMainWindow>
 
+#include <QAction>
 #include <QProcess>
+#include <QFileDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,11 +24,18 @@ public:
     ~MainWindow();
 
 public slots:
-    void readMsstyle_clicked();
+    void actionTriggered(QAction *action);
+    void readMSSTYLE(const QString &file);
+
+    void refreshParts(int index);
+    void refreshStates(int index);
+    void refreshProperties(int index);
+    void refreshProperty(int index);
 
 private:
     Ui::MainWindow *ui;
 
-    LibQmsstyle *m_loadedMsstyle;
+    LibQmsstyle *m_msstyleParser = nullptr;
+    QFileDialog *m_fileDlg = nullptr;
 };
 #endif // MAINWINDOW_H

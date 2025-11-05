@@ -149,14 +149,16 @@ bool PropertyHeader::isValid()
 }
 
 
-Property::Property(IDENTIFIER name, IDENTIFIER type)
-    : header(static_cast<qint32>(name), static_cast<qint32>(type))
+Property::Property(IDENTIFIER nameID, IDENTIFIER typeID)
+    : header(static_cast<qint32>(nameID), static_cast<qint32>(typeID))
 {
+    name = NAMES.key(header.nameID);
     setDefaultValues();
 }
 Property::Property(const PropertyHeader &headerObject)
     : header(headerObject)
 {
+    name = NAMES.key(header.nameID);
     setDefaultValues();
 }
 
@@ -204,17 +206,7 @@ void Property::setDefaultValues()
     }
 }
 
-QVariant Property::value()
-{
-    return m_value;
-}
-
-template <typename T> T Property::valueAs()
-{
-    return m_value.value<T>();
-}
-
-QString Property::valueString()
+QString Property::valueString() const
 {
     switch (static_cast<IDENTIFIER>(header.typeID))
     {
@@ -247,7 +239,7 @@ QString Property::valueString()
         QList<VisualEnum> list = VisualEnumsMap::find(header.nameID);
         if(list.isEmpty())
         {
-            return "what";
+            return "Empty";
         }
 
         if (index >= list.length())
@@ -319,8 +311,8 @@ void Property::setValue(int i)
     case IDENTIFIER::DISKSTREAM:
     case IDENTIFIER::FONT:
     {
-        header.shortFlag = i;
         m_value = i;
+        header.shortFlag = i;
         break;
     }
     default:
@@ -331,7 +323,7 @@ void Property::setValue(int i)
     }
 }
 
-bool Property::isImage()
+bool Property::isImage() const
 {
     switch (static_cast<IDENTIFIER>(header.typeID))
     {

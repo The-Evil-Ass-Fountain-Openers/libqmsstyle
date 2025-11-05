@@ -22,9 +22,10 @@ Style::Style(const QString &name, const QUrl &path)
     m_path = path;
     emit pathChanged(m_path);
 
-    m_styleDir = QDir(path.toString());
+    m_dir = QDir(path.toString());
+    emit dirChanged(m_dir);
 
-    if(!m_styleDir.exists())
+    if(!m_dir.exists())
     {
         qFatal() << "libqmsstyle<" + qApp->applicationName() + ">: extracted msstyle path does not exist. Style object is invalid.";
 
@@ -110,7 +111,7 @@ bool Style::load()
 
     // read CMAP (class map)
     {
-        QFile classmap(m_styleDir.absoluteFilePath(m_filesPrefix + "CMAP_CMAP"));
+        QFile classmap(m_dir.absoluteFilePath(m_filesPrefix + "CMAP_CMAP"));
 
         if(!classmap.exists())
         {
@@ -187,7 +188,7 @@ bool Style::load()
 
     // load properties
     {
-        QFile propertiesmap(m_styleDir.absoluteFilePath(m_filesPrefix + "VARIANT_NORMAL"));
+        QFile propertiesmap(m_dir.absoluteFilePath(m_filesPrefix + "VARIANT_NORMAL"));
 
         if(!propertiesmap.exists()) {
             qFatal() << "libqmsstyle<" + qApp->applicationName() + ">: VARIANT_NORMAL file does not exist. Style object is invalid.";

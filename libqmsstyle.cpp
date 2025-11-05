@@ -10,9 +10,9 @@ LibQmsstyle::LibQmsstyle()
     : QObject{nullptr}
 {}
 
-bool LibQmsstyle::loadMsstyle(const QUrl &path)
+bool LibQmsstyle::loadMsstyle(const QString &path)
 {
-    QFileInfo file(path.toString());
+    QFileInfo file(path);
 
     if(!(file.exists() && file.isFile())) return false;
 
@@ -35,6 +35,7 @@ bool LibQmsstyle::loadMsstyle(const QUrl &path)
         Style::Style *style = new Style::Style(file.fileName(), QUrl(tmp.absolutePath()));
         if(!style->invalid())
         {
+            // TODO: put all this debug stuff in a separate class or something idk
             qDebug() << "libqmsstyle<" + qApp->applicationName() + ">: Style object for " + file.absoluteFilePath() + " was created succesfully.";
 
             style->load();
@@ -44,6 +45,7 @@ bool LibQmsstyle::loadMsstyle(const QUrl &path)
         }
     });
 
+    // TODO: implement our own PE resource reader
     m_process->start("wrestool", args);
     m_process->waitForStarted();
 

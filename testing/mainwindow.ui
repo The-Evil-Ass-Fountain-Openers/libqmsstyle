@@ -14,135 +14,143 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="readMsstyle">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>400</y>
-      <width>121</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>read msstyle</string>
-    </property>
-    <property name="autoDefault">
-     <bool>true</bool>
-    </property>
-    <property name="default">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="msstylePath">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>400</y>
-      <width>441</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="placeholderText">
-     <string>/path/to/aero.msstyle</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>50</y>
-      <width>571</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>12</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>push button info:</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="classname">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>90</y>
-      <width>221</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>class name here</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="partid">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>110</y>
-      <width>221</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>part id here</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="stateid">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>130</y>
-      <width>221</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>normal state id here</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="extractedPath">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>480</y>
-      <width>221</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>msstyle extraction path here</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="imagefile">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>80</y>
-      <width>261</width>
-      <height>231</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>texture here</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="version">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>460</y>
-      <width>221</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>msstyle version here</string>
-    </property>
-   </widget>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="tabShape">
+       <enum>QTabWidget::TabShape::Rounded</enum>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <property name="usesScrollButtons">
+       <bool>false</bool>
+      </property>
+      <property name="documentMode">
+       <bool>false</bool>
+      </property>
+      <property name="tabsClosable">
+       <bool>false</bool>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Vista+</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="4" column="1">
+         <widget class="QLabel" name="propertyvalue">
+          <property name="text">
+           <string>Unknown</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="proeprty">
+          <property name="text">
+           <string>Property:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="part">
+          <property name="text">
+           <string>Part:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLabel" name="imagefile">
+          <property name="text">
+           <string>None</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="state">
+          <property name="text">
+           <string>State:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="currentClass"/>
+        </item>
+        <item row="3" column="1">
+         <widget class="QComboBox" name="currentProperty"/>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="imglbl">
+          <property name="text">
+           <string>Image:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="classlbl">
+          <property name="text">
+           <string>Class:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="propertyvallbl">
+          <property name="text">
+           <string>Property value:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="currentPart"/>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="currentState"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <attribute name="title">
+        <string>XP</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>685</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpen"/>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

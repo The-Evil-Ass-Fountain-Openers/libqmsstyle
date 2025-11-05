@@ -45,14 +45,15 @@ public:
 class Property
 {
 public:
-    Property(IDENTIFIER name, IDENTIFIER type);
+    Property(IDENTIFIER nameID, IDENTIFIER typeID);
     Property(const PropertyHeader &headerObject);
 
     PropertyHeader header;
+    QString name;
 
-    QVariant value();
-    template <typename T> T valueAs();
-    QString valueString();
+    QVariant value() const { return m_value; }
+    template <typename T> T valueAs() const { return m_value.value<T>(); }
+    QString valueString() const;
 
     void setValue(QVariant variant);
     void setValue(QString string);
@@ -60,10 +61,11 @@ public:
     void setValue(QList<QColor> colorList);
     void setValue(int i);
 
-    bool isImage();
+    bool isImage() const;
 
 private:
     void setDefaultValues();
+    void setName();
 
     QVariant m_value;
 };
