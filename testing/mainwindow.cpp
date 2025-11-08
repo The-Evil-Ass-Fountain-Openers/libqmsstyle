@@ -9,6 +9,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QMenuBar>
+#include <QLabel>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -38,30 +39,53 @@ MainWindow::~MainWindow()
 void MainWindow::actionTriggered(QAction *action)
 {
     if(!m_fileDlg) {
-        m_fileDlg = new QFileDialog(nullptr, "Open an MSSTYLE file", QDir::homePath(), "Windows MSSTYLE files (*.msstyles)");
-        QObject::connect(m_fileDlg, &QFileDialog::fileSelected, this, &MainWindow::readMSSTYLE);
+        m_fileDlg = new QFileDialog(nullptr, "Open an msstyles file", QDir::homePath(), "Windows msstyles files (*.msstyles)");
+        QObject::connect(m_fileDlg, &QFileDialog::fileSelected, this, &MainWindow::readMsstyles);
     }
 
     m_fileDlg->open();
 }
 
-void MainWindow::readMSSTYLE(const QString &file) {
+void MainWindow::readMsstyles(const QString &file) {
     if(!m_msstyleParser) {
         m_msstyleParser = new LibQmsstyle;
 
-        QObject::connect(m_msstyleParser, &LibQmsstyle::msstyleLoaded, this, [=](Style::Style *loadedStyle) {
+        QObject::connect(m_msstyleParser, &LibQmsstyle::msstylesLoaded, this, [=](Style::Style *loadedStyle) {
+            switch(loadedStyle->version()) {
+            case Style::Style::WindowsXP:
+                ui->statusBar->showMessage("Version: Windows XP");
+                break;
+            case Style::Style::WindowsVista:
+                ui->statusBar->showMessage("Version: Windows Vista");
+                break;
+            case Style::Style::Windows7:
+                ui->statusBar->showMessage("Version: Windows 7");
+                break;
+            case Style::Style::Windows8:
+                ui->statusBar->showMessage("Version: Windows 8/8.1");
+                break;
+            case Style::Style::Windows10:
+                ui->statusBar->showMessage("Version: Windows 10");
+                break;
+            case Style::Style::Windows11:
+                ui->statusBar->showMessage("Version: Windows 11");
+                break;
+            }
+
+            ui->currentClass->clear();
+
             for(Style::Class classObject : loadedStyle->classes())
                 ui->currentClass->addItem(classObject.className);
         });
     }
 
-    m_msstyleParser->loadMsstyle(file);
+    m_msstyleParser->loadMsstyles(file);
 }
 
 void MainWindow::refreshParts(int index) {
     ui->currentPart->clear();
     if(m_msstyleParser && index >= 0) {
-        const Style::Class *currentClass = &m_msstyleParser->loadedStyles().at(0)->classes().at(index);
+        const Style::Class *currentClass = &m_msstyleParser->loadedStyle()->classes().at(index);
 
         for(const Style::Part &partObject : currentClass->parts)
             ui->currentPart->addItem(QString::number(partObject.id) + " - " + partObject.name);
@@ -71,7 +95,7 @@ void MainWindow::refreshParts(int index) {
 void MainWindow::refreshStates(int index) {
     ui->currentState->clear();
     if(m_msstyleParser && index >= 0) {
-        const Style::Class *currentClass = &m_msstyleParser->loadedStyles().at(0)->classes().at(ui->currentClass->currentIndex());
+        const Style::Class *currentClass = &m_msstyleParser->loadedStyle()->classes().at(ui->currentClass->currentIndex());
         const Style::Part *currentPart = &currentClass->parts.at(index);
 
         for(const Style::State &stateObject : currentPart->states)
@@ -82,7 +106,7 @@ void MainWindow::refreshStates(int index) {
 void MainWindow::refreshProperties(int index) {
     ui->currentProperty->clear();
     if(m_msstyleParser && index >= 0) {
-        const Style::Class *currentClass = &m_msstyleParser->loadedStyles().at(0)->classes().at(ui->currentClass->currentIndex());
+        const Style::Class *currentClass = &m_msstyleParser->loadedStyle()->classes().at(ui->currentClass->currentIndex());
         const Style::Part *currentPart = &currentClass->parts.at(ui->currentPart->currentIndex());
         const Style::State *currentState = &currentPart->states.at(index);
 
@@ -94,7 +118,7 @@ void MainWindow::refreshProperties(int index) {
 // this sucks
 void MainWindow::refreshProperty(int index) {
     if(m_msstyleParser && index >= 0) {
-        Style::Style *currentStyle = m_msstyleParser->loadedStyles().at(0);
+        Style::Style *currentStyle = m_msstyleParser->loadedStyle();
         const Style::Class *currentClass = &currentStyle->classes().at(ui->currentClass->currentIndex());
         const Style::Part *currentPart = &currentClass->parts.at(ui->currentPart->currentIndex());
         const Style::State *currentState = &currentPart->states.at(ui->currentState->currentIndex());

@@ -13,16 +13,16 @@ class LIBQMSSTYLE_EXPORT LibQmsstyle : public QObject
     Q_OBJECT
 
 public:
-    explicit LibQmsstyle();
+    LibQmsstyle();
 
-    Style::Style *loadMsstyle(const QString &path);
-    QList<Style::Style *> loadedStyles() { return m_loadedMsstyles; }
+    Style::Style *loadMsstyles(const QString &path);
+    Style::Style *loadedStyle() { return m_loadedMsstyles; }
 
 signals:
-    void msstyleLoaded(Style::Style *loadedStyle);
+    void msstylesLoaded(Style::Style *loadedStyle);
 
 private:
-    QList<Style::Style *> m_loadedMsstyles;
+    Style::Style *m_loadedMsstyles = nullptr;
 };
 
 #endif // LIBQMSSTYLE_H

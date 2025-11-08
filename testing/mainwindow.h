@@ -25,7 +25,7 @@ public:
 
 public slots:
     void actionTriggered(QAction *action);
-    void readMSSTYLE(const QString &file);
+    void readMsstyles(const QString &file);
 
     void refreshParts(int index);
     void refreshStates(int index);
