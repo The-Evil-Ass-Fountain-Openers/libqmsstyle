@@ -23,7 +23,7 @@ This library has [LibWres](https://github.com/The-Evil-Ass-Fountain-Openers/LibW
 - [ ] Add writing support
 - [ ] Add AMAP reading support (Windows 8+)
 - [ ] Convert the current testing app into an MSSTYLE previewer (partly done)
-    - [ ] Add screenshots
+- [ ] Add screenshots
 - [ ] Add Windows XP MSSTYLE parsing support
 
 ## Credits
