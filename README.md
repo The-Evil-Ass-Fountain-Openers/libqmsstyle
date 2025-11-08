@@ -14,6 +14,11 @@ This library also has [LibWres](https://github.com/The-Evil-Ass-Fountain-Openers
 
 - [msstyleEditor](https://github.com/nptr/msstyleEditor/): original code that helped out **a lot** with Vista+ msstyles parsing
 
+## Installation
+
+1. Clone this repository with ``git clone --depth=1 https://github.com/The-Evil-Ass-Fountain-Openers/libqmsstyles.git``, or by downloading the source code directly from the ``Code`` button.
+2. Within the repository folder, run ``sh install.sh`` in a terminal. You can also pass ``--ninja`` as an argument to compile with Ninja instead.
+
 ## Screenshots
 
 ![button](screenshots/button.png)
