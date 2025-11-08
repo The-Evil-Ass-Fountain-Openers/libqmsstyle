@@ -28,7 +28,6 @@ qt_add_executable(testing
 
 target_link_libraries(testing PRIVATE Qt${QT_VERSION_MAJOR}::Widgets qmsstyles)
 
-include(GNUInstallDirs)
 install(TARGETS testing
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

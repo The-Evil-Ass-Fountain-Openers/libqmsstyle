@@ -1,14 +1,14 @@
-# libqmsstyle
+# libqmsstyles
 
 ## Microsoft® Windows™ is a registered trademark of Microsoft® Corporation. This name is used for referential use only, and does not aim to usurp copyrights from Microsoft. Microsoft Ⓒ 2025 All rights reserved. All resources belong to Microsoft Corporation.
 
 ## Introduction
 
-libqmsstyle is a Qt C++ library tailor-made specifically for Windows Vista+ msstyles parsing (soon Windows XP). It is extremely unfinished and some stuff may not work as expected or function names might change in the near future.
+libqmsstyles is a Qt C++ library tailor-made specifically for Windows Vista+ msstyles parsing (soon Windows XP). It is extremely unfinished and some stuff may not work as expected or function names might change in the near future.
 
-At the time of writing this, libqmsstyle is being developed under Qt Creator, with Qt 6.10.0.
+This library is being developed under Qt Creator, with Qt 6.10.0.
 
-This library has [LibWres](https://github.com/The-Evil-Ass-Fountain-Openers/LibWres) as a dependency.
+This library also has [LibWres](https://github.com/The-Evil-Ass-Fountain-Openers/LibWres) as a dependency.
 
 ## Credits
 
